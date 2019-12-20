@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -36,6 +37,19 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+
+            //эмулируем залогиненного пользователя
+            if($user->getTarget()){
+
+                $userTarget = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->findByTarget();
+                if($userTarget){
+                    $userTarget->setTarget(false);
+                    $entityManager->persist($userTarget);
+                }
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -67,6 +81,19 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //эмулируем залогиненного пользователя
+            if($user->getTarget()){
+
+                $userTarget = $this->getDoctrine()
+                    ->getRepository(User::class)
+                    ->findByTarget();
+                if($userTarget){
+                    $userTarget->setTarget(false);
+                    $this->getDoctrine()->getManager()->persist($userTarget);
+                }
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index');
@@ -90,5 +117,53 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * Функцинал для добавления пользователя в избранные срабатывает только для user.target = 1
+     * @Route("/faveUser/{id}", name="user_fave_user", methods={"GET"})
+     */
+    public function faveUser(User $user)
+    {
+        $userTarget = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findByTarget();
+
+        if($userTarget->getFavoriteUsers()->filter(function(User $u) use ($user){
+            return $u->getId() == $user->getId();
+        })->isEmpty()){
+            $userTarget->addFavoriteUser($user);
+        } else {
+            $userTarget->removeFavoriteUser($user);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($userTarget);
+        $entityManager->flush();
+        return $this->redirectToRoute('user_show', ['id' => $userTarget->getId()]);
+    }
+
+    /**
+     *  Функцинал для добавления продукта в избранные срабатывает только для user.target = 1
+     * @Route("/faveProduct/{id}", name="user_fave_product", methods={"GET"})
+     */
+    public function faveProduct(Product $product)
+    {
+        $userTarget = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findByTarget();
+
+        if($userTarget->getFavoriteProducts()->filter(function(Product $p) use ($product){
+            return $p->getId() == $product->getId();
+        })->isEmpty()){
+            $userTarget->addFavoriteProduct($product);
+        } else {
+            $userTarget->removeFavoriteProduct($product);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($userTarget);
+        $entityManager->flush();
+        return $this->redirectToRoute('user_show', ['id' => $userTarget->getId()]);
     }
 }

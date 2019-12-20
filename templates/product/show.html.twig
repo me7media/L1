@@ -16,6 +16,7 @@
         <td>Category</td>
         <td>Price</td>
         <td>Quantity</td>
+        <td>Actions</td>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
             <td>{{ product.getCategory() }}</td>
             <td>{{ product.getPrice() }}</td>
             <td>{{ product.getQt() }}</td>
+            <td><a href="{{ path('user_fave_product', {'id': product.id}) }}">add/delete fave</a></td>
     </tr>
     {% endfor %}
     </tbody>

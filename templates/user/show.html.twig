@@ -27,6 +27,24 @@
                 <th>Target</th>
                 <td>{{ user.target ? 'Yes' : 'No' }}</td>
             </tr>
+            <tr>
+                <th>Faves Users</th>
+                {% for faveUser in user.getFavoriteUsers() %}
+                    <td><a href="{{ path('user_show', {id: faveUser.id }) }}">{{ faveUser.name }}</a></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Faves Products</th>
+                {% for faveProduct in user.getFavoriteProducts() %}
+                    <td><a href="{{ path('product_show', {id: faveProduct.id }) }}">{{ faveProduct.name }}</td>
+                {% endfor %}
+            </tr>
+        {% if user.target == false %}
+            <tr>
+                <th>Add/Delete Fave</th>
+                <td><a href="{{ path('user_fave_user', {'id': user.id}) }}">add/delete fave</a></td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 

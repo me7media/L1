@@ -149,7 +149,14 @@ class ProductService extends AbstractController
 
         $productEntity->setCreatedAt(new \DateTime('now'));
         $productEntity->setUpdatedAt(new \DateTime('now'));
-        $productEntity->setGoOnSale(new \DateTime($requestProduct['goOnSale']));
+
+        $goOnSale = new \DateTime($requestProduct['goOnSale']);
+        $tomorrow = new \DateTime('tomorrow');
+        if($goOnSale < $tomorrow){
+            $goOnSale = $tomorrow;
+        }
+
+        $productEntity->setGoOnSale($goOnSale);
 
         $manager->persist($productEntity);
         $manager->flush();
