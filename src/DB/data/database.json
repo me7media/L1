@@ -1,0 +1,112 @@
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "first",
+            "parent_id": null
+        },
+        {
+            "id": 2,
+            "name": "second",
+            "parent_id": null
+        },
+        {
+            "id": 3,
+            "name": "third",
+            "parent_id": 1
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "first",
+            "category_id": 1,
+            "price": "10",
+            "qt": "10"
+        },
+        {
+            "id": 2,
+            "name": "second",
+            "category_id": 2,
+            "price": 100,
+            "qt": 100
+        },
+        {
+            "id": 3,
+            "name": "third",
+            "category_id": 3,
+            "price": 10,
+            "qt": 10
+        },
+        {
+            "id": 4,
+            "name": "fours",
+            "category_id": 1,
+            "price": 100,
+            "qt": 100
+        },
+        {
+            "id": 5,
+            "name": "fifth",
+            "category_id": 2,
+            "price": 100,
+            "qt": 10
+        },
+        {
+            "id": 6,
+            "name": "sixth",
+            "category_id": 3,
+            "price": 10,
+            "qt": 100
+        },
+        {
+            "id": 7,
+            "name": "seventh",
+            "category_id": 1,
+            "price": 100,
+            "qt": 10
+        },
+        {
+            "id": 8,
+            "name": "eighth",
+            "category_id": 2,
+            "price": 10,
+            "qt": 100
+        },
+        {
+            "id": 9,
+            "name": "ninth",
+            "category_id": 3,
+            "price": 100,
+            "qt": 10
+        },
+        {
+            "id": 10,
+            "name": "ten",
+            "category_id": "1",
+            "price": "10",
+            "qt": "100"
+        },
+        {
+            "id": 11,
+            "name": "Name",
+            "category_id": "1",
+            "price": "1",
+            "qt": "1"
+        },
+        {
+            "id": 12,
+            "name": "Name",
+            "category_id": "1",
+            "price": "1",
+            "qt": "1"
+        },
+        {
+            "id": 13,
+            "name": "Name",
+            "category_id": "1",
+            "price": "1",
+            "qt": "1"
+        }
+    ]
+}

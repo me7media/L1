@@ -1,0 +1,28 @@
+#framework:
+#    messenger:
+#        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+#        # failure_transport: failed
+#
+#        transports:
+#            doctrine: doctrine://default
+#            failed: 'doctrine://default?queue_name=failed'
+#            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+#            dsn: 'doctrine://default?queue_name=failed'
+framework:
+    messenger:
+        transports:
+            async: 'doctrine://default'
+            failed: 'doctrine://default?queue_name=failed'
+#            doctrine_short: doctrine://default?queue_name=custom_queue
+#            doctrine_full:
+#                dsn: doctrine://default
+#                options:
+#                    queue_name: custom_queue
+#        buses:
+#            messenger.bus.default:
+#                middleware:
+#                # service ids that implement Symfony\Component\Messenger\Middleware
+#                - 'App\Middlewares\EmailSendMiddleware'
+        routing:
+            'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
+#            'App\Messages\EmailMessage': async
