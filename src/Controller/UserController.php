@@ -39,12 +39,11 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
 
             //эмулируем залогиненного пользователя
-            if($user->getTarget()){
-
+            if ($user->getTarget()) {
                 $userTarget = $this->getDoctrine()
                     ->getRepository(User::class)
                     ->findByTarget();
-                if($userTarget){
+                if ($userTarget) {
                     $userTarget->setTarget(false);
                     $entityManager->persist($userTarget);
                 }
@@ -83,12 +82,11 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             //эмулируем залогиненного пользователя
-            if($user->getTarget()){
-
+            if ($user->getTarget()) {
                 $userTarget = $this->getDoctrine()
                     ->getRepository(User::class)
                     ->findByTarget();
-                if($userTarget){
+                if ($userTarget) {
                     $userTarget->setTarget(false);
                     $this->getDoctrine()->getManager()->persist($userTarget);
                 }
@@ -120,7 +118,8 @@ class UserController extends AbstractController
     }
 
     /**
-     * Функцинал для добавления пользователя в избранные срабатывает только для user.target = 1
+     * Функцинал для добавления пользователя в избранные срабатывает только для user.target = 1.
+     *
      * @Route("/faveUser/{id}", name="user_fave_user", methods={"GET"})
      */
     public function faveUser(User $user)
@@ -129,9 +128,9 @@ class UserController extends AbstractController
             ->getRepository(User::class)
             ->findByTarget();
 
-        if($userTarget->getFavoriteUsers()->filter(function(User $u) use ($user){
+        if ($userTarget->getFavoriteUsers()->filter(function (User $u) use ($user) {
             return $u->getId() == $user->getId();
-        })->isEmpty()){
+        })->isEmpty()) {
             $userTarget->addFavoriteUser($user);
         } else {
             $userTarget->removeFavoriteUser($user);
@@ -140,11 +139,13 @@ class UserController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($userTarget);
         $entityManager->flush();
+
         return $this->redirectToRoute('user_show', ['id' => $userTarget->getId()]);
     }
 
     /**
-     *  Функцинал для добавления продукта в избранные срабатывает только для user.target = 1
+     *  Функцинал для добавления продукта в избранные срабатывает только для user.target = 1.
+     *
      * @Route("/faveProduct/{id}", name="user_fave_product", methods={"GET"})
      */
     public function faveProduct(Product $product)
@@ -153,9 +154,9 @@ class UserController extends AbstractController
             ->getRepository(User::class)
             ->findByTarget();
 
-        if($userTarget->getFavoriteProducts()->filter(function(Product $p) use ($product){
+        if ($userTarget->getFavoriteProducts()->filter(function (Product $p) use ($product) {
             return $p->getId() == $product->getId();
-        })->isEmpty()){
+        })->isEmpty()) {
             $userTarget->addFavoriteProduct($product);
         } else {
             $userTarget->removeFavoriteProduct($product);
@@ -164,6 +165,7 @@ class UserController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($userTarget);
         $entityManager->flush();
+
         return $this->redirectToRoute('user_show', ['id' => $userTarget->getId()]);
     }
 }

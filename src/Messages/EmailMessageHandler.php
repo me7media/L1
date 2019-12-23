@@ -2,7 +2,6 @@
 
 namespace App\Messages;
 
-
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Mime\Header\Headers;
@@ -18,6 +17,7 @@ class EmailMessageHandler implements MessageHandlerInterface
 
     /**
      * EmailMessageHandler constructor.
+     *
      * @param EsmtpTransport $transport
      */
     public function __construct(EsmtpTransport $transport)
@@ -27,6 +27,7 @@ class EmailMessageHandler implements MessageHandlerInterface
 
     /**
      * @param EmailMessage $email
+     *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function __invoke(EmailMessage $email)

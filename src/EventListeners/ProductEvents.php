@@ -2,7 +2,6 @@
 
 namespace App\EventListeners;
 
-
 use App\Entity\Product;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
@@ -20,6 +19,7 @@ class ProductEvents
             return;
         }
         $this->setCreatedAt($entity);
+
         return true;
     }
 
@@ -28,7 +28,7 @@ class ProductEvents
      */
     private function setCreatedAt(Product $entity)
     {
-        $entity->setCreatedAt((new DateTime)->now());
+        $entity->setCreatedAt((new DateTime())->now());
     }
 
     /**
@@ -40,5 +40,4 @@ class ProductEvents
     {
         return ['prePersist', 'postUpdate'];
     }
-
 }

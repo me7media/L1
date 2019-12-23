@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\DB\DB;
 use App\Entity\Category;
 use App\Entity\Product;
@@ -67,6 +66,7 @@ class ProductService extends AbstractController
                 $this->qt = $product['qt'];
             }
         }
+
         return $product;
     }
 
@@ -90,17 +90,17 @@ class ProductService extends AbstractController
     public function convertToArray()
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
+            'id'          => $this->id,
+            'name'        => $this->name,
             'category_id' => $this->category_id,
-            'price' => $this->price,
-            'qt' => $this->qt
+            'price'       => $this->price,
+            'qt'          => $this->qt,
         ];
     }
 
     public function createFromArray($data)
     {
-        return new self (
+        return new self(
             $data['id'],
             $data['name'],
             $data['category_id'],
@@ -129,6 +129,7 @@ class ProductService extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return Product
      */
     public function createProduct(Request $request)
@@ -152,7 +153,7 @@ class ProductService extends AbstractController
 
         $goOnSale = new \DateTime($requestProduct['goOnSale']);
         $tomorrow = new \DateTime('tomorrow');
-        if($goOnSale < $tomorrow){
+        if ($goOnSale < $tomorrow) {
             $goOnSale = $tomorrow;
         }
 
@@ -162,11 +163,13 @@ class ProductService extends AbstractController
         $manager->flush();
 
         $this->notify($productEntity, 'created');
+
         return $productEntity;
     }
 
     /**
      * @param $product
+     *
      * @return mixed
      */
     public function updateProduct($product)
@@ -177,23 +180,21 @@ class ProductService extends AbstractController
         $entityManager->flush();
 
         $this->notify($product, 'changed');
-        return $product;
 
+        return $product;
     }
 
     /**
      * @param Product $product
-     * @param string $action
+     * @param string  $action
      */
     public function notify(Product $product, string $action): void
     {
-        $title = 'Product ' . $action;
+        $title = 'Product '.$action;
         $html = $this->renderView(
             'product/show.html.twig',
             ['products' => [$product]]);
 
         $this->notify->notify($title, $html, ['email']);
     }
-
-
 }

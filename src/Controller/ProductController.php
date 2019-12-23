@@ -10,10 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class ProductController extends AbstractController
 {
-
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="products")
@@ -30,7 +28,9 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/product/{id}", name="product_show")
+     *
      * @param Product $product
+     *
      * @return Response
      */
     public function show(Product $product): Response
@@ -40,6 +40,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/product", name="create_product", methods={"GET","HEAD"})
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function create()
@@ -47,6 +48,7 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class)
             ->remove('id')
             ->createView();
+
         return $this->render('product/create.html.twig', [
             'form' => $form,
         ]);
@@ -54,21 +56,26 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/product", name="store_product", methods={"POST", "PUT"})
-     * @param Request $request
+     *
+     * @param Request        $request
      * @param ProductService $ps
+     *
      * @return Response
      */
     public function store(Request $request, ProductService $ps)
     {
         $product = $ps->createProduct($request);
+
         return $this->showProduct($product);
     }
 
     /**
      * @Route("/product/{id}/edit", name="edit_product")
-     * @param Request $request
-     * @param Product $product
+     *
+     * @param Request        $request
+     * @param Product        $product
      * @param ProductService $ps
+     *
      * @return mixed
      */
     public function edit(Request $request, Product $product, ProductService $ps)
@@ -79,6 +86,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
             $ps->updateProduct($product);
+
             return $this->show($product);
         }
 

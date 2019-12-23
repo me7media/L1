@@ -5,7 +5,7 @@ namespace App\DB;
 class JsonDB implements DB
 {
     private $path;
-    const FILLENAME = __DIR__ . '/data/database.json';
+    const FILLENAME = __DIR__.'/data/database.json';
 
     public function __construct($path = null)
     {
@@ -29,6 +29,7 @@ class JsonDB implements DB
     /**
      * @param $json
      * @param null $file
+     *
      * @return bool|mixed
      */
     public function parseJson($json, $file = null)
@@ -40,6 +41,7 @@ class JsonDB implements DB
         if (null === $data && JSON_ERROR_NONE !== json_last_error()) {
             return false;
         }
+
         return $data;
     }
 
@@ -50,8 +52,10 @@ class JsonDB implements DB
     {
         if (self::exists()) {
             $json = file_get_contents($this->path);
+
             return static::parseJson($json, $this->path);
         }
+
         return false;
     }
 
@@ -67,9 +71,6 @@ class JsonDB implements DB
         }
     }
 
-    /**
-     *
-     */
     public function printData()
     {
         $jsonData = self::read();
@@ -79,6 +80,7 @@ class JsonDB implements DB
         foreach ($jsonData['products'] as $product) {
             printf($mask, $product['id'], $product['name'], @$jsonData['categories'][$product['category_id'] - 1]['name'], $product['price'], $product['qt']);
         }
+
         return true;
     }
 }
