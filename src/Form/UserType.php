@@ -14,7 +14,7 @@ class UserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,11 +23,11 @@ class UserType extends AbstractType
             ->add('age', NumberType::class)
             ->add('male', ChoiceType::class, [
                 'choices' => [
-                    'Male' => 0,
-                    'Female' => 1
-                ]])
+                    'Male'   => 0,
+                    'Female' => 1,
+                ], ])
             ->add('target', CheckboxType::class, [
-                    'required' => false
+                    'required' => false,
                 ]);
     }
 

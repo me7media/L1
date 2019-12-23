@@ -8,7 +8,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 class UserEvents
 {
     /**
-     * @param User $user
+     * @param User               $user
      * @param LifecycleEventArgs $args
      */
     public function prePersist(User $user, LifecycleEventArgs $args)
@@ -26,7 +26,7 @@ class UserEvents
      */
     private function setCreatedAt(User $entity)
     {
-        $entity->setCreatedAt((new DateTime)->now());
+        $entity->setCreatedAt((new DateTime())->now());
     }
 
     /**

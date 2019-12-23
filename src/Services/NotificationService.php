@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\Messages\EmailMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -34,9 +33,10 @@ class NotificationService
 
     /**
      * NotificationService constructor.
-     * @param string $adminMail
-     * @param string $mailConf
-     * @param string $telegramConf
+     *
+     * @param string              $adminMail
+     * @param string              $mailConf
+     * @param string              $telegramConf
      * @param MessageBusInterface $bus
      */
     public function __construct(string $adminMail,
@@ -53,7 +53,7 @@ class NotificationService
     /**
      * @param string $title
      * @param string $body
-     * @param array $method
+     * @param array  $method
      */
     public function notify(string $title, string $body, array $method = [])
     {
@@ -61,10 +61,10 @@ class NotificationService
         in_array('telegram', $method) && $this->telegramConf ? $this->telegramMail($title) : true;
     }
 
-
     /**
      * @param string $title
      * @param string $body
+     *
      * @return bool
      */
     public function sendEmail(string $title, string $body): bool
@@ -91,6 +91,7 @@ class NotificationService
 
     /**
      * @param $body
+     *
      * @return bool
      */
     public function telegramMail($body)

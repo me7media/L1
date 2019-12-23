@@ -36,15 +36,12 @@ class UserRepository extends ServiceEntityRepository
     }
     */
 
-
     public function findByTarget(): ?User
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.target = :val')
             ->setParameter('val', true)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-
 }

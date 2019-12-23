@@ -2,7 +2,6 @@
 
 namespace App\Messages;
 
-
 class EmailMessage
 {
     /**
@@ -24,6 +23,7 @@ class EmailMessage
 
     /**
      * EmailMessage constructor.
+     *
      * @param string $from
      * @param string $to
      * @param string $title
@@ -35,8 +35,8 @@ class EmailMessage
         $this->to = $to;
         $this->title = $title;
         $this->body = $body;
-
     }
+
     /**
      * @return string
      */
@@ -44,6 +44,7 @@ class EmailMessage
     {
         return $this->from;
     }
+
     /**
      * @return string
      */
@@ -51,6 +52,7 @@ class EmailMessage
     {
         return $this->to;
     }
+
     /**
      * @return string
      */
@@ -58,6 +60,7 @@ class EmailMessage
     {
         return $this->title;
     }
+
     /**
      * @return string
      */
